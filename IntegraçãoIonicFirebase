@@ -1,7 +1,7 @@
 //Passos para a integração Ionic/Angular - Firebase (Serviço de Banco de dados do Google): 
 
 Passo 1: 
-- Acessar Firebase
+- Acessar Firebase (não trabalha como tabelas, como BD padrão; usa 'collections')
 - Criar projeto
 - Criar um app dentro do projeto
 - Criar FireStore Database
@@ -55,3 +55,65 @@ import { AngularFireModule } from '@angular/fire/compat';
 imports: [AngularFireModule.inicializeApp(environment.firebase)],
 
 __________________________ Fim da integração ____________________
+_________________________________________________________________
+
+Fazendo funcionar:
+Passo 1:
+- Criar serviço 'firebase'
+
+Passo 2:
+- Importar módulo 'AngularFirestoreModule' from '@angular/fire/compat/firestore';
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [AngularFireModule.initializeApp(environment.firebase), AngularFirestoreModule],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  bootstrap: [AppComponent],
+})
+
+Passo 3 (firebase.service.ts): 
+export class FirebaseService {
+  //Criando e tipando uma variável (do tipo coleção para receber coleção)
+	itemCollection: AngularFirestoreCollection (Ferramenta para manipula localmente as coleções)
+	
+	constructor(private angularFS: AngularFirestore) {
+		//Para guardar coleções
+		this.itemCollection = angularFS.collection('');
+	}
+
+ //Para gerar consultaDados() {}:
+ import { map } from 'rxjs/operators';
+
+ consultaDados() {
+  return this.itemCollection.snapshotChanges().pipe(
+		map(actions => {
+     //Variável 'a' controla o mapeamento
+     return actions.map(a => {
+      //Lê o documento, separa os dados e guarda no const data:
+      const data = a.payload.doc.data();
+      //Separa exclusivamente o id do documento:
+      const id = a.payload.doc.id;
+      //Verifica se tem mais dados:
+      return { id, ...data }
+		 })
+    })
+  )
+ }
+
+ consultaOne(id: string) {
+  return this.itemCollection.doc(id).valueChanges();
+ }
+
+ cadastroDados(item: any) {
+	return this.itemCollection.add(item)
+ }
+
+ excluirDados(id: string) {
+	return this.itemCollection.doc(id).delete()
+ }
+
+ atualizarDados(id: string, item: any) {
+  return this.itemCollection.doc(id).update(item)
+ }
+
+}
