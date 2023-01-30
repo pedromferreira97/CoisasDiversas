@@ -1,0 +1,29 @@
+//Passos para a integração Ionic - Firebase (Serviço de Banco de dados do Google): 
+
+Passo 1: 
+- Acessar Firebase
+- Criar projeto
+- Criar um app dentro do projeto
+- Criar FireStore Database
+
+__________________________________________________________________
+Passo 2:
+
+- Dentro da pasta do projeto: npm install firebase --save
+- Depois: npm install @angular/fire --save
+
+__________________________________________________________________
+Passo 3:
+- Configurar o arquivo 'environment.ts' do projeto Ionic (com as informações do Firebase)
+
+export const environment = {
+  production: false, 
+  firebase (variável pode ter qualquer nome): {
+    apiKey: "AIzaSyARbYIuot2vLoeAiyB9SkJFdF3ipKWigqI",
+    authDomain: "projetofireb-228bc.firebaseapp.com",
+    projectId: "projetofireb-228bc",
+    storageBucket: "projetofireb-228bc.appspot.com",
+    messagingSenderId: "30534140984",
+    appId: "1:30534140984:web:891f4b5da22c62466252cd"
+  }
+};
