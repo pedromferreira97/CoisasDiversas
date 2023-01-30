@@ -1,4 +1,4 @@
-//Passos para a integração Ionic - Firebase (Serviço de Banco de dados do Google): 
+//Passos para a integração Ionic/Angular - Firebase (Serviço de Banco de dados do Google): 
 
 Passo 1: 
 - Acessar Firebase
@@ -35,3 +35,23 @@ Passo 4:
 "compilerOptions": {
     "strict": false,
 }
+____________________________________________________________________
+Passo 5: 
+- Importar módulos (arquivo 'app.module.ts'):
+
+1) AngularFireModule (módulo que faz ligação do Firebase com a nossa aplicação):
+
+import { AngularFireModule } from '@angular/fire/compat';
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [AngularFireModule],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  bootstrap: [AppComponent],
+})
+
+1.1) Adicionar ao AngularFireModule a propriedade Firebase (do arquivo 'environment.ts'):
+
+imports: [AngularFireModule.inicializeApp(environment.firebase)],
+
+__________________________ Fim da integração ____________________
