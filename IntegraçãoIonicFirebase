@@ -27,3 +27,11 @@ export const environment = {
     appId: "1:30534140984:web:891f4b5da22c62466252cd"
   }
 };
+
+___________________________________________________________________
+Passo 4:
+- Mudar status do "strict" no arquivo 'tsconfig.json' (de true para false):
+
+"compilerOptions": {
+    "strict": false,
+}
